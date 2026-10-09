@@ -19,15 +19,19 @@ body {
   align-items: center;
   gap: 100px;
   background-color: aliceblue;
+  flex-wrap: wrap;
+  padding-inline: 1rem;
 }
 .hall-container {
-  min-width: 70rem;
-  height: 300px;
+  width: 70rem;
+  height: 35rem;
   text-align: center;
   background-color: black;
-  overflow: hidden;
   padding: 0.5rem;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .screen {
@@ -54,6 +58,7 @@ body {
   background-color: lightgray;
   border-radius: 16px;
   cursor: pointer;
+  transition: .2s ease;
 }
 .reserved {
   cursor: unset;
@@ -65,8 +70,8 @@ body {
 
 .booking-summary {
   background-color: darkred;
-  min-width: 40rem;
-  height: 300px;
+  width: 50rem;
+  height: 35rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -74,6 +79,11 @@ body {
   gap: 2rem;
   padding: 1rem;
   border-radius: 16px;
+}
+
+.summary-title {
+  text-align: center;
+  border-bottom: 2px solid gold;
 }
 
 .booking-summary > * {

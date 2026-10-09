@@ -21,14 +21,13 @@ function generateSeats() {
 
 function generateSummary() {
   selectedSeats = [...document.querySelectorAll(".selected")];
-  console.log(selectedSeats);
   selectedSeatsHTML = selectedSeats.length
     ? selectedSeats.map((seat) => `<p>${seat.textContent}</p>`)
     : "";
   seatsCount = selectedSeats.length;
 
+  TotalPrice = 0;
   selectedSeats.forEach((seat) => {
-    TotalPrice = 0;
     seat.classList.contains("C") ? (TotalPrice += 150) : (TotalPrice += 100);
   });
 
@@ -36,9 +35,13 @@ function generateSummary() {
     <h2 class="summary-title">Booking Summary</h2>
     <div class="selected-seats">
       <span>Selected-seats</span>
-      <span class='seats'>${selectedSeatsHTML.toString().replaceAll(",", "    ")}</span></div>
-    <div class="seats-count"><span>Count:</span> <span> ${seatsCount}/ 3</span></div>
-    <div class="total-price"><span>Total Price:</span> <span>${TotalPrice} EGP</span></div>
+      <span class='seats'>${selectedSeatsHTML}</span></div>
+    <div class="seats-count">
+      <span>Count:</span>
+      <span> ${seatsCount}/ 3</span></div>
+    <div class="total-price">
+      <span>Total Price:</span>
+      <span>${TotalPrice} EGP</span></div>
     <button class="submit-booking-btn">Submit Booking</button>
     <div class="zero-selected-feedback non-visible"></div>`;
   summary.innerHTML = summaryHTML;
