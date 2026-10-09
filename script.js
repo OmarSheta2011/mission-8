@@ -5,7 +5,7 @@ const summary = document.querySelector(".booking-summary");
 let selectedSeats = [];
 let seatsCount = 0;
 let TotalPrice = 0;
-let selectedSeatsHTML = '';
+let selectedSeatsHTML = "";
 // -------------------------------------------------
 function generateSeats() {
   let seatsHTML = "";
@@ -16,7 +16,7 @@ function generateSeats() {
   `;
   const A2 = document.querySelector(".A.column-2");
   const B3 = document.querySelector(".B.column-3");
-  return seatsHTML;
+  seatsGrid.innerHTML = seatsHTML;
 }
 
 function generateSummary() {
@@ -36,17 +36,18 @@ function generateSummary() {
     <h2 class="summary-title">Booking Summary</h2>
     <div class="selected-seats">
       <span>Selected-seats</span>
-      <span class='seats'>${selectedSeatsHTML}</span></div>
+      <span class='seats'>${selectedSeatsHTML.toString().replaceAll(",", "    ")}</span></div>
     <div class="seats-count"><span>Count:</span> <span> ${seatsCount}/ 3</span></div>
     <div class="total-price"><span>Total Price:</span> <span>${TotalPrice} EGP</span></div>
     <button class="submit-booking-btn">Submit Booking</button>
     <div class="zero-selected-feedback non-visible"></div>`;
-  return summaryHTML;
+  summary.innerHTML = summaryHTML;
 }
 
 function generatePage() {
-  seatsGrid.innerHTML = generateSeats();
-  summary.innerHTML = generateSummary();
+  generateSeats();
+  generateSummary();
+
   document.querySelectorAll(".seat").forEach((seat) => {
     seat.addEventListener("click", function select(e) {
       if (seat.classList.contains("reserved")) return;
@@ -58,7 +59,7 @@ function generatePage() {
         return;
       }
       seat.classList.toggle("selected");
-      summary.innerHTML = generateSummary();
+      generateSummary();
     });
   });
   document.querySelector("form").addEventListener("submit", (e) => {
@@ -68,7 +69,7 @@ function generatePage() {
         .querySelector(".zero-selected-feedback")
         .classList.remove("non-visible");
       document.querySelector(".zero-selected-feedback").textContent =
-        "PleaseSelect any seat";
+        "Please Select any seat";
       return;
     }
     alert(
@@ -79,8 +80,8 @@ function generatePage() {
     selectedSeats = [];
     seatsCount = 0;
     TotalPrice = 0;
-    selectedSeatsHTML = '';
-    generatePage()
+    selectedSeatsHTML = "";
+    generatePage();
   });
 }
 
