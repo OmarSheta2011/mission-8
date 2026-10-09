@@ -1,0 +1,80 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+}
+body {
+  font-size: 1.6rem;
+}
+
+.root {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 100px;
+  background-color: aliceblue;
+}
+.hall-container {
+  min-width: 70rem;
+  height: 300px;
+  text-align: center;
+  background-color: yellow;
+  overflow: hidden;
+}
+
+.screen {
+  height: 50px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-radius: 16px;
+}
+
+.seats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  background-color: red;
+}
+
+.seat {
+  padding: 2rem 1rem;
+  color: blue;
+  background-color: gray;
+  border-radius: 16px;
+}
+.selected {
+  background-color: aqua;
+}
+
+.booking-summary {
+  background-color: blue;
+  min-width: 40rem;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.booking-summary > * {
+  width: 100%;
+}
+.booking-summary > div {
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 2rem;
+}
+
+.booking-summary #selected-seats {
+  flex: column;
+}
