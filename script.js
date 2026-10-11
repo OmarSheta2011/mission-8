@@ -32,8 +32,7 @@ function generateSummary() {
   });
 
   const summaryHTML = `
-            <div class="booking-summary-wrraper">
-          <h2 class="summary-title">Booking Summary</h2>
+            <h2 class="summary-title">Booking Summary</h2>
           <div class="selected-seats">
             <span>Selected-seats</span>
             <span class="seats">${selectedSeatsHTML}</span>
@@ -115,15 +114,18 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
   generatePage();
 });
+
 document.querySelector("form").addEventListener("reset", (e) => {
   e.preventDefault();
   reset();
   generatePage();
 });
 
-document.addEventListener("keyup", (e) => {
-  e.preventDefault();
-  e.key === "Escape" && reset();
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    reset();
+    generatePage();
+  }
 });
 
 generatePage();

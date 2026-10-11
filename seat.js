@@ -38,8 +38,6 @@ export function reset() {
       seats[letter + i] = new Seat(letter, i);
     }
   }
-  console.log(seats);
 }
 
-console.log(seats);
 export default seats;
