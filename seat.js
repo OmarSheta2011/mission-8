@@ -11,8 +11,10 @@ class Seat {
     }
   }
 
-  changeState() {
-    if (this.state === "available") {
+  changeState(res) {
+    if (res) {
+      this.state = "reserved";
+    } else if (this.state === "available") {
       this.state = "selected";
     } else {
       this.state = "available";

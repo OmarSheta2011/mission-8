@@ -13,7 +13,7 @@ function generateSeats() {
   for (let [seatName, seatProps] of Object.entries(seats)) {
     seatsHTML += `<div class="seat ${seatProps.row} column-${seatProps.column} ${seatProps.state === "reserved" && "reserved"} ${seatProps.state === "selected" && "selected"}"
       data-price="${seatProps.price}"
-    >${seatProps.name}</div>`;
+    >${seatName}</div>`;
   }
   seatsGrid.innerHTML = seatsHTML;
 }
@@ -91,9 +91,21 @@ document.querySelector("form").addEventListener("submit", (e) => {
       (seat) => seat.textContent,
     )} with total of ${TotalPrice} EGP `,
   );
+  selectedSeats.forEach((seat) => {
+    let matchingSeat;
+    for (let [seatName, seatProps] of Object.entries(seats)) {
+      if (seat.textContent === seatName) {
+        matchingSeat = seatProps;
+        console.log(matchingSeat);
+      }
+    }
+    matchingSeat.changeState(true);
+  });
+  selectedSeats = [];
   seatsCount = 0;
   TotalPrice = 0;
   selectedSeatsHTML = "";
+
   generatePage();
 });
 
