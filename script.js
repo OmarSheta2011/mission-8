@@ -1,7 +1,8 @@
 import seats from "./seat.js";
+import { reset } from "./seat.js";
 // -------------------------------------------------
 const seatsGrid = document.querySelector(".seats-grid");
-const summary = document.querySelector(".booking-summary");
+const summary = document.querySelector(".booking-summary-wrraper");
 let selectedSeats = [];
 let seatsCount = 0;
 let TotalPrice = 0;
@@ -31,18 +32,22 @@ function generateSummary() {
   });
 
   const summaryHTML = `
-    <h2 class="summary-title">Booking Summary</h2>
-    <div class="selected-seats">
-      <span>Selected-seats</span>
-      <span class='seats'>${selectedSeatsHTML}</span></div>
-    <div class="seats-count">
-      <span>Count:</span>
-      <span> ${seatsCount}/ 3</span></div>
-    <div class="total-price">
-      <span>Total Price:</span>
-      <span>${TotalPrice} EGP</span></div>
-    <button class="submit-booking-btn">Submit Booking</button>
-    <div class="zero-selected-feedback non-visible"></div>`;
+            <div class="booking-summary-wrraper">
+          <h2 class="summary-title">Booking Summary</h2>
+          <div class="selected-seats">
+            <span>Selected-seats</span>
+            <span class="seats">${selectedSeatsHTML}</span>
+          </div>
+          <div class="seats-count">
+            <span>Count:</span>
+            <span> ${seatsCount}/ 3</span>
+          </div>
+          <div class="total-price">
+            <span>Total Price:</span>
+            <span>${TotalPrice} EGP</span>
+          </div>
+
+    `;
   summary.innerHTML = summaryHTML;
 }
 
@@ -60,6 +65,7 @@ function generatePage() {
         alert("You can Only choose 3 seats at a time.");
         return;
       }
+
       let matchingSeat;
       for (let [seatName, seatProps] of Object.entries(seats)) {
         if (seat.textContent === seatName) {
@@ -67,12 +73,14 @@ function generatePage() {
         }
       }
       matchingSeat.changeState();
-      console.log(matchingSeat);
+
       seat.classList.toggle("selected");
 
       generateSummary();
     });
   });
+
+  document.querySelector(".reset-btn").addEventListener("click", reset);
 }
 
 document.querySelector("form").addEventListener("submit", (e) => {
@@ -85,7 +93,7 @@ document.querySelector("form").addEventListener("submit", (e) => {
       "Please Select any seat";
     return;
   }
-  console.log(selectedSeats);
+
   alert(
     `succesfuly booked ${selectedSeats.map(
       (seat) => seat.textContent,
@@ -96,7 +104,6 @@ document.querySelector("form").addEventListener("submit", (e) => {
     for (let [seatName, seatProps] of Object.entries(seats)) {
       if (seat.textContent === seatName) {
         matchingSeat = seatProps;
-        console.log(matchingSeat);
       }
     }
     matchingSeat.changeState(true);
@@ -107,6 +114,16 @@ document.querySelector("form").addEventListener("submit", (e) => {
   selectedSeatsHTML = "";
 
   generatePage();
+});
+document.querySelector("form").addEventListener("reset", (e) => {
+  e.preventDefault();
+  reset();
+  generatePage();
+});
+
+document.addEventListener("keyup", (e) => {
+  e.preventDefault();
+  e.key === "Escape" && reset();
 });
 
 generatePage();

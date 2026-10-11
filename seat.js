@@ -22,11 +22,24 @@ class Seat {
   }
 }
 
-const seats = {};
+let seats = {};
 for (let letter of ["A", "B", "C"]) {
   for (let i = 1; i < 5; i++) {
     seats[letter + i] = new Seat(letter, i);
   }
 }
+
+export function reset() {
+  for (let key in seats) {
+    delete seats[key];
+  }
+  for (let letter of ["A", "B", "C"]) {
+    for (let i = 1; i < 5; i++) {
+      seats[letter + i] = new Seat(letter, i);
+    }
+  }
+  console.log(seats);
+}
+
 console.log(seats);
 export default seats;
