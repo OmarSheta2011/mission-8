@@ -1,4 +1,4 @@
-import Seat from "./seat.js";
+import seats from "./seat.js";
 // -------------------------------------------------
 const seatsGrid = document.querySelector(".seats-grid");
 const summary = document.querySelector(".booking-summary");
@@ -9,13 +9,12 @@ let selectedSeatsHTML = "";
 // -------------------------------------------------
 function generateSeats() {
   let seatsHTML = "";
-  seatsHTML += `
-  ${Seat("A", 1)} ${Seat("A", 2)} ${Seat("A", 3)} ${Seat("A", 4)}
-  ${Seat("B", 1)} ${Seat("B", 2)} ${Seat("B", 3)} ${Seat("B", 4)}
-  ${Seat("C", 1)} ${Seat("C", 2)} ${Seat("C", 3)} ${Seat("C", 4)}
-  `;
-  const A2 = document.querySelector(".A.column-2");
-  const B3 = document.querySelector(".B.column-3");
+  seatsHTML += ``;
+  for (let [seatName, seatProps] of Object.entries(seats)) {
+    seatsHTML += `<div class="seat ${seatProps.row} column-${seatProps.column} ${seatProps.state === "reserved" && "reserved"} ${seatProps.state === "selected" && "selected"}"
+      data-price="${seatProps.price}"
+    >${seatProps.name}</div>`;
+  }
   seatsGrid.innerHTML = seatsHTML;
 }
 
@@ -61,31 +60,41 @@ function generatePage() {
         alert("You can Only choose 3 seats at a time.");
         return;
       }
+      let matchingSeat;
+      for (let [seatName, seatProps] of Object.entries(seats)) {
+        if (seat.textContent === seatName) {
+          matchingSeat = seatProps;
+        }
+      }
+      matchingSeat.changeState();
+      console.log(matchingSeat);
       seat.classList.toggle("selected");
+
       generateSummary();
     });
   });
-  document.querySelector("form").addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (!selectedSeats.length) {
-      document
-        .querySelector(".zero-selected-feedback")
-        .classList.remove("non-visible");
-      document.querySelector(".zero-selected-feedback").textContent =
-        "Please Select any seat";
-      return;
-    }
-    alert(
-      `succesfuly booked ${selectedSeats.map(
-        (seat) => seat.textContent,
-      )} with total of ${TotalPrice} EGP `,
-    );
-    selectedSeats = [];
-    seatsCount = 0;
-    TotalPrice = 0;
-    selectedSeatsHTML = "";
-    generatePage();
-  });
 }
+
+document.querySelector("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (!selectedSeats.length) {
+    document
+      .querySelector(".zero-selected-feedback")
+      .classList.remove("non-visible");
+    document.querySelector(".zero-selected-feedback").textContent =
+      "Please Select any seat";
+    return;
+  }
+  console.log(selectedSeats);
+  alert(
+    `succesfuly booked ${selectedSeats.map(
+      (seat) => seat.textContent,
+    )} with total of ${TotalPrice} EGP `,
+  );
+  seatsCount = 0;
+  TotalPrice = 0;
+  selectedSeatsHTML = "";
+  generatePage();
+});
 
 generatePage();
