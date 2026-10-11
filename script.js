@@ -22,7 +22,7 @@ function generateSeats() {
 function generateSummary() {
   selectedSeats = [...document.querySelectorAll(".selected")];
   selectedSeatsHTML = selectedSeats.length
-    ? selectedSeats.map((seat) => `<p>${seat.textContent}</p>`)
+    ? selectedSeats.map((seat) => `<p>${seat.textContent}</p>`).join(" ")
     : "";
   seatsCount = selectedSeats.length;
 
