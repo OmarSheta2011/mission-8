@@ -7,6 +7,7 @@ let selectedSeats = [];
 let seatsCount = 0;
 let TotalPrice = 0;
 let selectedSeatsHTML = "";
+let isBooking = true;
 // -------------------------------------------------
 function generateSeats() {
   let seatsHTML = "";
@@ -54,76 +55,86 @@ function generatePage() {
   generateSeats();
   generateSummary();
 
-  document.querySelectorAll(".seat").forEach((seat) => {
-    seat.addEventListener("click", function select(e) {
-      if (seat.classList.contains("reserved")) return;
-      if (
-        selectedSeats.length + 1 === 4 &&
-        !e.target.classList.contains("selected")
-      ) {
-        alert("You can Only choose 3 seats at a time.");
-        return;
-      }
+  if (isBooking) {
+    document.querySelectorAll(".seat").forEach((seat) => {
+      seat.addEventListener("click", function select() {
+        if (seat.classList.contains("reserved")) return;
+        if (
+          selectedSeats.length + 1 === 4 &&
+          !e.target.classList.contains("selected")
+        ) {
+          alert("You can Only choose 3 seats at a time.");
+          return;
+        }
 
+        let matchingSeat;
+        for (let [seatName, seatProps] of Object.entries(seats)) {
+          if (seat.textContent === seatName) {
+            matchingSeat = seatProps;
+          }
+        }
+        matchingSeat.changeState();
+        seat.classList.toggle("selected");
+        generateSummary();
+      });
+    });
+  }
+}
+
+document.querySelector("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (isBooking) {
+    if (!selectedSeats.length) {
+      document
+        .querySelector(".zero-selected-feedback")
+        .classList.remove("non-visible");
+      document.querySelector(".zero-selected-feedback").textContent =
+        "Please Select any seat";
+      return;
+    }
+
+    alert(
+      `succesfuly booked ${selectedSeats.map(
+        (seat) => seat.textContent,
+      )} with total of ${TotalPrice} EGP `,
+    );
+    selectedSeats.forEach((seat) => {
       let matchingSeat;
       for (let [seatName, seatProps] of Object.entries(seats)) {
         if (seat.textContent === seatName) {
           matchingSeat = seatProps;
         }
       }
-      matchingSeat.changeState();
-
-      seat.classList.toggle("selected");
-
-      generateSummary();
+      matchingSeat.changeState(true);
     });
-  });
+    isBooking = false;
+    generatePage();
 
-  document.querySelector(".reset-btn").addEventListener("click", reset);
-}
-
-document.querySelector("form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (!selectedSeats.length) {
-    document
-      .querySelector(".zero-selected-feedback")
-      .classList.remove("non-visible");
-    document.querySelector(".zero-selected-feedback").textContent =
-      "Please Select any seat";
-    return;
+    document.querySelectorAll(".seat").forEach((seat) => {
+      seat.classList.add("unclickable");
+    });
+    document.querySelector(".submit-booking-btn").style.opacity = "0.7";
+    document.querySelector(".submit-booking-btn").style.cursor = "unset";
   }
-
-  alert(
-    `succesfuly booked ${selectedSeats.map(
-      (seat) => seat.textContent,
-    )} with total of ${TotalPrice} EGP `,
-  );
-  selectedSeats.forEach((seat) => {
-    let matchingSeat;
-    for (let [seatName, seatProps] of Object.entries(seats)) {
-      if (seat.textContent === seatName) {
-        matchingSeat = seatProps;
-      }
-    }
-    matchingSeat.changeState(true);
-  });
-  selectedSeats = [];
-  seatsCount = 0;
-  TotalPrice = 0;
-  selectedSeatsHTML = "";
-
-  generatePage();
 });
 
 document.querySelector("form").addEventListener("reset", (e) => {
   e.preventDefault();
   reset();
+  document
+    .querySelector(".zero-selected-feedback")
+    .classList.add("non-visible");
+  isBooking = true;
   generatePage();
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     reset();
+    document
+      .querySelector(".zero-selected-feedback")
+      .classList.add("non-visible");
+    isBooking = true;
     generatePage();
   }
 });

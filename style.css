@@ -59,8 +59,8 @@ body {
 .seat {
   padding: 2rem 1rem;
   color: white;
-  background-color: lightgray;
   border-radius: 16px;
+  background-color: lightgray;
   cursor: pointer;
   transition: 0.2s ease;
 }
@@ -68,8 +68,13 @@ body {
   cursor: unset;
   background-color: red;
 }
+
 .selected {
   background-color: green;
+}
+
+.unclickable {
+  cursor: unset;
 }
 
 .booking-summary-form {
