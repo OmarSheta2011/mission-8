@@ -125,6 +125,8 @@ document.querySelector("form").addEventListener("reset", (e) => {
     .querySelector(".zero-selected-feedback")
     .classList.add("non-visible");
   isBooking = true;
+  document.querySelector(".submit-booking-btn").style.opacity = "1";
+  document.querySelector(".submit-booking-btn").style.cursor = "pointer";
   generatePage();
 });
 
@@ -135,6 +137,8 @@ document.addEventListener("keydown", (e) => {
       .querySelector(".zero-selected-feedback")
       .classList.add("non-visible");
     isBooking = true;
+    document.querySelector(".submit-booking-btn").style.opacity = "1";
+    document.querySelector(".submit-booking-btn").style.cursor = "pointer";
     generatePage();
   }
 });
