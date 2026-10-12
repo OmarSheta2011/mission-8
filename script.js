@@ -57,7 +57,7 @@ function generatePage() {
 
   if (isBooking) {
     document.querySelectorAll(".seat").forEach((seat) => {
-      seat.addEventListener("click", function select() {
+      seat.addEventListener("click", function select(e) {
         if (seat.classList.contains("reserved")) return;
         if (
           selectedSeats.length + 1 === 4 &&

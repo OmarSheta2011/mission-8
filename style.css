@@ -23,7 +23,7 @@ body {
   padding: 1rem;
 }
 .hall-container {
-  width: 70rem;
+  flex: 2;
   height: 35rem;
   text-align: center;
   background-color: black;
@@ -79,7 +79,7 @@ body {
 
 .booking-summary-form {
   background-color: darkred;
-  width: 50rem;
+  flex: 1;
   height: 35rem;
   display: flex;
   flex-direction: column;
@@ -161,4 +161,5 @@ body {
   .reset-hint {
     display: none;
   }
+
 }
